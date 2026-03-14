@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevRoast
 
-## Getting Started
+Paste seu código. Receba uma avaliação... sincera demais.
 
-First, run the development server:
+DevRoast é uma ferramenta web onde você cola seu código e recebe feedback hilariantemente brutal sobre ele. O app avalia seu código e mostra exatamente o quanto seu código é horrível — com direito a "shame leaderboard" para competir com outros desenvolvedores.
+
+## Funcionalidades
+
+- **Paste & Roast**: Cole qualquer código e receba uma avaliação
+- **Roast Mode**: O modo mais sarcástico possível ativado por padrão
+- **Score Ring**: Visualize sua pontuação de vergonha
+- **Shame Leaderboard**: Veja os piores códigos da internet ranqueados
+- **Syntax Highlighting**: Suporte a múltiplas linguagens
+
+## Tecnologias
+
+- Next.js 16
+- Tailwind CSS
+- Biome (linting)
+- Shiki (syntax highlighting)
+
+## Como executar
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feito durante o **NLW** da [Rocketseat](https://www.rocketseat.com.br) — onde aprendemos a construir apps reais durante as aulas do evento.
