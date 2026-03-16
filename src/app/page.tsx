@@ -9,7 +9,7 @@ export default function Home() {
     <main className="flex min-h-[calc(100vh-14rem)] w-full flex-col items-center px-10 pt-20">
       <div className="flex flex-col items-center gap-8">
         <HeroSection />
-        <CodeEditor />
+      <CodeEditor code={`function() { return "hello world"; }`} showLanguageSelector editable />
         <ActionsBar />
         <div className="h-15 w-full" />
         <LeaderboardPreview />
