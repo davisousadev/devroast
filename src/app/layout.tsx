@@ -16,8 +16,8 @@ export default function RootLayout({
 		<html lang="en">
 			<body className="bg-zinc-950">
 				<Navbar
-				 	links={[{ label: 'leaderboard', href: '/leaderboard' }]}
-				  	logo={<NavbarLogo name="devroast" />} 
+					links={[{ label: 'leaderboard', href: '/leaderboard' }]}
+					logo={<NavbarLogo name="devroast" href="/" />}
 				/>
 				{children}
 			</body>

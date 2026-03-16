@@ -45,22 +45,35 @@ Navbar.displayName = 'Navbar';
 export interface NavbarLogoProps extends HTMLAttributes<HTMLDivElement> {
 	prompt?: string;
 	name: string;
+	href?: string;
 }
 
 const NavbarLogo = forwardRef<HTMLDivElement, NavbarLogoProps>(
-	({ className, prompt = '>', name, ...props }, ref) => {
-		return (
-			<div
-				ref={ref}
-				className={cn('flex items-center gap-2', className)}
-				{...props}
-			>
+	({ className, prompt = '>', name, href, ...props }, ref) => {
+		const content = (
+			<>
 				<span className="font-mono text-xl font-bold text-emerald-500">
 					{prompt}
 				</span>
 				<span className="font-mono text-lg font-medium text-zinc-200">
 					{name}
 				</span>
+			</>
+		);
+
+		return (
+			<div
+				ref={ref}
+				className={cn('flex items-center gap-2', className)}
+				{...props}
+			>
+				{href ? (
+					<a href={href} className="flex items-center gap-2">
+						{content}
+					</a>
+				) : (
+					content
+				)}
 			</div>
 		);
 	}

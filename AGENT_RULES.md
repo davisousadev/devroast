@@ -21,6 +21,6 @@ docs: documentação
 
 ## Design
 
-- Design originado do arquivo `devroast.pen` (Pencil)
+- Design originado do arquivo `devroast.pen`, disponível no próprio Pencil via conexão MCP
 - Usar variáveis CSS do Tailwind para cores
 - Fonte: JetBrains Mono (mono)
