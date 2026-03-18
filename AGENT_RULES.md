@@ -7,6 +7,7 @@
   - Exemplo: `h-15` ao invés de `h-[60px]`
 - **Componentes UI**: Components em `src/components/ui/`
 - **biome**: Linter e formatter configurado no `biome.json`
+- **Queries Paralelas**: Em Server Components, usar `Promise.all` para executar múltiplas queries em paralelo ao invés de sequencialmente
 
 ## Estrutura de Commits (Conventional Commits)
 
