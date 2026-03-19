@@ -22,6 +22,7 @@ export const submissions = pgTable('submissions', {
 	language: varchar('language', { length: 50 }).notNull(),
 	roastMode: boolean('roast_mode').notNull().default(true),
 	score: integer('score'),
+	username: varchar('username', { length: 100 }).notNull().default('anonymous'),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 

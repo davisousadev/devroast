@@ -1,6 +1,32 @@
 import { sql } from 'drizzle-orm';
 import { db } from '../index';
 
+export interface LeaderboardRow {
+	id: string;
+	code: string;
+	language: string;
+	score: number;
+	username: string;
+	created_at: Date;
+	issue_count: number;
+	critical_count: number;
+}
+
+function toNumber(value: unknown) {
+	if (typeof value === 'number') return value;
+	if (typeof value === 'string') return Number(value);
+	return 0;
+}
+
+function toDate(value: unknown) {
+	if (value instanceof Date) return value;
+	if (typeof value === 'string' || typeof value === 'number') {
+		const parsed = new Date(value);
+		if (!Number.isNaN(parsed.getTime())) return parsed;
+	}
+	return new Date(0);
+}
+
 export async function createSubmission({
 	code,
 	language,
@@ -45,6 +71,7 @@ export async function getLeaderboard(limit = 100) {
         s.code,
         s.language,
         s.score,
+        s.username,
         s.created_at,
         COUNT(ri.id) as issue_count,
         COALESCE(AVG(CASE WHEN ri.type = 'critical' THEN 1 ELSE 0 END), 0) as critical_count
@@ -56,7 +83,17 @@ export async function getLeaderboard(limit = 100) {
       LIMIT ${limit}
     `
 	);
-	return result.rows;
+
+	return result.rows.map((row) => ({
+		id: String(row.id ?? ''),
+		code: String(row.code ?? ''),
+		language: String(row.language ?? ''),
+		score: toNumber(row.score),
+		username: String(row.username ?? 'anonymous'),
+		created_at: toDate(row.created_at),
+		issue_count: toNumber(row.issue_count),
+		critical_count: toNumber(row.critical_count),
+	})) satisfies LeaderboardRow[];
 }
 
 export async function getSubmissionById(id: string) {
