@@ -19,19 +19,17 @@ export interface CodeEditorProps extends HTMLAttributes<HTMLDivElement> {
 	onCodeChange?: (code: string) => void;
 }
 
-const defaultCode = `function calculateTotal(items) {
-  var total = 0;
-  for (var i = 0; i < items.length; i++) {
-    total = total + items[i].price;
-  }
-  if (total > 100) {
-    console.log("discount applied");
-    total = total * 0.9;
-  }
-  // TODO: handle tax calculation
-  // TODO: handle currency conversion
-  return total;
-}`;
+const defaultCode = `copy your code here and get roasted
+
+
+
+
+
+
+
+
+
+`;
 
 const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
 	(

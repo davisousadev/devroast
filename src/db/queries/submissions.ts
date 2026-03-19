@@ -32,33 +32,16 @@ export async function createSubmission({
 	language,
 	roastMode,
 	score,
+	username = 'anonymous',
 }: {
 	code: string;
 	language: string;
 	roastMode: boolean;
 	score: number;
+	username?: string;
 }) {
 	const result = await db.execute(
-		sql`INSERT INTO submissions (code, language, roast_mode, score) VALUES (${code}, ${language}, ${roastMode}, ${score}) RETURNING *`
-	);
-	return result.rows[0];
-}
-
-export async function createRoastIssue({
-	submissionId,
-	type,
-	title,
-	description,
-	line,
-}: {
-	submissionId: string;
-	type: 'critical' | 'warning' | 'good';
-	title: string;
-	description: string;
-	line?: number;
-}) {
-	const result = await db.execute(
-		sql`INSERT INTO roast_issues (submission_id, type, title, description, line) VALUES (${submissionId}, ${type}, ${title}, ${description}, ${line}) RETURNING *`
+		sql`INSERT INTO submissions (code, language, roast_mode, score, username) VALUES (${code}, ${language}, ${roastMode}, ${score}, ${username}) RETURNING *`
 	);
 	return result.rows[0];
 }

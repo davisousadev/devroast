@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 
 export function LeaderboardPreviewSkeleton() {
 	return (
-		<div className="flex w-[60rem] flex-col gap-6">
+		<div className="flex w-240 flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<span className="font-mono text-sm font-bold text-emerald-500">

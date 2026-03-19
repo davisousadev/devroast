@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="bg-zinc-950">
+			<body className="bg-zinc-950" suppressHydrationWarning>
 				<TRPCReactProvider>
 					<Navbar
 						links={[{ label: 'leaderboard', href: '/leaderboard' }]}

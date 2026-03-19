@@ -26,15 +26,32 @@ export const submissions = pgTable('submissions', {
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
+export const roastResults = pgTable('roast_results', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	submissionId: uuid('submission_id')
+		.notNull()
+		.references(() => submissions.id),
+	roastMode: boolean('roast_mode').notNull(),
+	summary: text('summary').notNull(),
+	score: integer('score').notNull(),
+	rawResponse: text('raw_response'),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
 export const roastIssues = pgTable('roast_issues', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	submissionId: uuid('submission_id')
 		.notNull()
 		.references(() => submissions.id),
+	roastResultId: uuid('roast_result_id')
+		.notNull()
+		.references(() => roastResults.id),
 	type: roastIssueType('type').notNull(),
 	title: varchar('title', { length: 255 }).notNull(),
 	description: text('description').notNull(),
 	line: integer('line'),
+	suggestion: text('suggestion'),
+	severity: integer('severity').notNull().default(5),
 });
 
 export const stats = pgTable('stats', {
@@ -48,5 +65,7 @@ export type Submission = typeof submissions.$inferSelect;
 export type NewSubmission = typeof submissions.$inferInsert;
 export type RoastIssue = typeof roastIssues.$inferSelect;
 export type NewRoastIssue = typeof roastIssues.$inferInsert;
+export type RoastResult = typeof roastResults.$inferSelect;
+export type NewRoastResult = typeof roastResults.$inferInsert;
 export type Stats = typeof stats.$inferSelect;
 export type NewStats = typeof stats.$inferInsert;

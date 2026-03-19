@@ -1,7 +1,6 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { CodeEditor } from '@/components/code-editor';
-import { ActionsBar } from '@/components/home/actions-bar';
-import { FooterStats } from '@/components/home/footer-stats';
+import { CodeEditorWithActions } from '@/components/home/code-editor-with-actions';
+import { ContainerStats } from '@/components/home/container-stats';
 import { HeroSection } from '@/components/home/hero-section';
 import { LeaderboardPreview } from '@/components/home/leaderboard-preview';
 import { getQueryClient, trpc } from '@/server/trpc/server';
@@ -20,13 +19,12 @@ export default async function Home() {
 			<main className="flex min-h-[calc(100vh-14rem)] w-full flex-col items-center px-10 pt-20">
 				<div className="flex flex-col items-center gap-8">
 					<HeroSection />
-					<CodeEditor showLanguageSelector editable />
-					<ActionsBar />
+					<CodeEditorWithActions />
 					<div className="h-15 w-full" />
+					<ContainerStats />
 					<LeaderboardPreview />
 					<div className="h-15 w-full" />
 				</div>
-				<FooterStats />
 			</main>
 		</HydrationBoundary>
 	);

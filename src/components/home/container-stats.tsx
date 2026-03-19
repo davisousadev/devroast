@@ -2,12 +2,12 @@ import { Suspense } from 'react';
 import { Stats } from './stats';
 import { StatsSkeleton } from './stats-skeleton';
 
-export function FooterStats() {
+export function ContainerStats() {
 	return (
-		<footer className="mt-auto py-10">
+		<div className="mt-auto py-10">
 			<Suspense fallback={<StatsSkeleton />}>
 				<Stats />
 			</Suspense>
-		</footer>
+		</div>
 	);
 }

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import pg from 'pg';
-import { roastIssues, stats, submissions } from './schema';
+import { roastIssues, roastResults, stats, submissions } from './schema';
 
 const pool = new pg.Pool({
 	connectionString:
@@ -117,13 +117,12 @@ function generateIssue(type: (typeof issueTypes)[number]) {
 		title: faker.helpers.arrayElement(titles),
 		description: faker.lorem.sentence(),
 		line: faker.number.int({ min: 1, max: 100 }),
+		severity: faker.number.int({ min: 1, max: 10 }),
 	};
 }
 
 async function seed() {
 	console.log('🌱 Starting seed...');
-
-	const submissionIds: string[] = [];
 
 	for (let i = 0; i < 100; i++) {
 		const language = faker.helpers.arrayElement(languages);
@@ -141,7 +140,16 @@ async function seed() {
 			})
 			.returning({ id: submissions.id });
 
-		submissionIds.push(submission.id);
+		const [roastResult] = await db
+			.insert(roastResults)
+			.values({
+				submissionId: submission.id,
+				roastMode,
+				summary: faker.lorem.sentence(),
+				score,
+				rawResponse: '{}',
+			})
+			.returning({ id: roastResults.id });
 
 		const issueCount = faker.number.int({ min: 2, max: 6 });
 		const issues = [];
@@ -158,6 +166,7 @@ async function seed() {
 		await db.insert(roastIssues).values(
 			issues.map((issue) => ({
 				submissionId: submission.id,
+				roastResultId: roastResult.id,
 				...issue,
 			}))
 		);

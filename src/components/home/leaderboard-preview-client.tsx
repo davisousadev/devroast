@@ -38,7 +38,7 @@ export function LeaderboardPreviewClient({
 	};
 
 	return (
-		<div className="flex w-[60rem] flex-col gap-6">
+		<div className="flex w-240 flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<h2 className="flex items-center gap-2 font-mono text-sm font-bold text-zinc-200">
 					<span className="text-emerald-500">{'//'}</span>
@@ -116,10 +116,14 @@ export function LeaderboardPreviewClient({
 				))}
 			</div>
 			<div className="flex justify-center px-4 py-4">
-				<span className="font-mono text-xs text-gray-600">
+				<span className="font-mono text-xs text-gray-600 hover:text-gray-500">
 					{typeof totalCount === 'number'
-						? `showing top ${items.length} of ${totalCount.toLocaleString('en-US')} · view full leaderboard >>`
-						: `showing top ${items.length} · view full leaderboard >>`}
+						? <a href="/leaderboard" className="">
+								showing top {items.length} of {totalCount.toLocaleString('en-US')} · view full leaderboard &gt;&gt;
+							</a>
+						: <a href="/leaderboard" className="">
+								showing top {items.length} · view full leaderboard &gt;&gt;
+							</a>}
 				</span>
 			</div>
 		</div>
