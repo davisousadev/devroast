@@ -1,4 +1,6 @@
-import { forwardRef, type HTMLAttributes } from 'react';
+"use client";
+
+import { forwardRef, useEffect, useState, type HTMLAttributes } from 'react';
 import { codeToHtml } from 'shiki';
 import { cn } from '@/lib/utils';
 
@@ -64,7 +66,7 @@ const CodeBlock = forwardRef<HTMLDivElement, CodeBlockProps>(
 							{lines.map((_, i) => (
 								<span
 									key={i}
-									className="font-mono text-[13px] leading-[1.5rem] text-gray-600"
+									className="font-mono text-[13px] leading-6 text-gray-600"
 								>
 									{i + 1}
 								</span>
@@ -82,12 +84,49 @@ const CodeBlock = forwardRef<HTMLDivElement, CodeBlockProps>(
 
 CodeBlock.displayName = 'CodeBlock';
 
-async function CodeHighlight({ code, lang }: { code: string; lang: string }) {
-	const html = await highlightCode(code, lang);
+function CodeHighlight({ code, lang }: { code: string; lang: string }) {
+	const [html, setHtml] = useState<string>('');
+	const [error, setError] = useState<Error | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
+
+
+	useEffect(() => {
+		let isMounted = true;
+
+		async function fetchHighlightedCode() {
+			setLoading(true);
+			setError(null);
+
+			try {
+				const highlighted = await highlightCode(code, lang);
+				if (isMounted) {
+					setHtml(highlighted);
+				}
+			} catch (err) {
+				if (isMounted) {
+					setError(err as Error);
+				}
+			} finally {
+				if (isMounted) {
+					setLoading(false);
+				}
+			}
+		}
+
+		fetchHighlightedCode()
+
+		return () => {
+			isMounted = false;
+		}
+	}, [code, lang]);
+
+	if (loading) return <div className="text-center text-sm text-gray-500">Loading...</div>;
+
+	if (error) return <div className="text-center text-sm text-red-500">Error loading code: {error.message}</div>;
 
 	return (
 		<div
-			className="shiki-container font-mono text-[13px] leading-[1.5rem]"
+			className="shiki-container font-mono text-[13px] leading-6"
 			dangerouslySetInnerHTML={{ __html: html }}
 		/>
 	);

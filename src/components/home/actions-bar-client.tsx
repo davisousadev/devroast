@@ -41,19 +41,26 @@ export function ActionsBarClient({ code, language }: ActionsBarClientProps) {
 
 			if (error && typeof error === 'object') {
 				const err = error as { message?: string; code?: string };
-				const errMsg = err.message || '';
+				const errMsg = (err.message || '').toLowerCase();
 
 				if (
+					errMsg.includes('limit: 0') ||
+					errMsg.includes('billing') ||
+					errMsg.includes('sem quota ativa')
+				) {
+					message =
+						'Gemini sem quota ativa para esta chave/projeto. Ative billing/quotas no Google AI Studio e gere uma nova API key.';
+				} else if (
 					errMsg.includes('429') ||
 					errMsg.includes('quota') ||
-					errMsg.includes('RESOURCE_EXHAUSTED')
+					errMsg.includes('resource_exhausted')
 				) {
 					message = 'API quota exceeded. Please try again in a few minutes.';
-				} else if (errMsg.includes('401') || errMsg.includes('API key')) {
+				} else if (errMsg.includes('401') || errMsg.includes('api key')) {
 					message = 'Invalid API key. Please check your configuration.';
 				} else if (
 					errMsg.includes('400') ||
-					errMsg.includes('INVALID_ARGUMENT')
+					errMsg.includes('invalid_argument')
 				) {
 					message = 'Invalid request. Please check your code.';
 				}
